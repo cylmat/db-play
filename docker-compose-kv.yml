@@ -1,0 +1,28 @@
+
+networks: 
+    db:
+
+# volumes:
+#     redis_data:
+
+services: 
+
+    #########
+    # Redis #
+    #########
+    redis:
+        image: redis:6
+        restart: always
+        volumes: 
+            - ./data/redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+        ports: [6379:6379]
+        networks: [db]
+
+    redisadmin:
+        image: erikdubbelboer/phpredisadmin
+        restart: always
+        environment:
+            - REDIS_1_HOST=redis
+            - REDIS_1_NAME=redis
+        ports: [8083:80]
+        networks: [db]

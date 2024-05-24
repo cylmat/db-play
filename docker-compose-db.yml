@@ -1,0 +1,39 @@
+
+networks: 
+    db:
+
+volumes:
+    mysql_data:
+
+services: 
+
+    ##########
+    # MySql #
+    ##########
+    mysql:
+        image: mysql:8
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
+            MYSQL_DATABASE: mydb
+            MYSQL_TCP_PORT: 3306 # Mandatory 3306 for Adminer
+        volumes:
+            - .docker/data/mysql/my.cnf:/etc/mysql/my.cnf:ro
+            - mysql_data:/var/lib/mysql
+        networks: [db]
+
+    adminer:
+        image: adminer:4-standalone
+        restart: always
+        ports: [8081:8080]
+        networks: [db]
+
+    phpmyadmin:
+        image: phpmyadmin:5.0
+        restart: always
+        ports: [8082:80]
+        environment: 
+            - PMA_ARBITRARY=1
+        networks: [db]
