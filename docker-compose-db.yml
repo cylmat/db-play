@@ -10,8 +10,9 @@ services:
     ##########
     # MySql #
     ##########
-    mysql:
+    mysql8:
         image: mysql:8
+        container_name: mysql8
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: root
@@ -20,11 +21,12 @@ services:
             MYSQL_DATABASE: mydb
             MYSQL_TCP_PORT: 3306 # Mandatory 3306 for Adminer
         volumes:
-            - .docker/data/mysql/my.cnf:/etc/mysql/my.cnf:ro
+            - .docker/mysql/my.cnf:/etc/mysql/my.cnf:ro
+            - .:/var/www
             - mysql_data:/var/lib/mysql
         networks: [db]
 
-    adminer:
+    adminer4:
         image: adminer:4-standalone
         restart: always
         ports: [8081:8080]

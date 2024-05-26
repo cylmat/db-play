@@ -14,18 +14,23 @@ RUN apt update
 # SHELL #
 #########
 RUN apt install -y busybox curl git wget zsh zip
-
-# EXT #
+# BUILD #
 RUN apt install -y build-essential gcc make
 RUN apt install -y pkg-config software-properties-common
-RUN apt install -y --no-install-recommends python3 sqlite3 vim
+# DEV #
+RUN apt install -y --no-install-recommends python3 python3-pip sqlite3 vim
+# EXT #
 RUN apt install -y \
     apt-utils \
     autoconf \
     bzip2 \
     gnupg \
+    jq \
     libc6-dev \
     net-tools
+
+# PYTHON #
+RUN pip install Faker
 
 #########
 # PANEL #

@@ -1,0 +1,1 @@
+INSERT INTO `tree` (`name`, `type`, `size`) VALUES('Becky Romero', 'green', 305);

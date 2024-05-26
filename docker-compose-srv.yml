@@ -1,0 +1,20 @@
+networks: 
+    db:
+
+services: 
+    ubuntu: 
+        image: dbplay
+        container_name: dbplay
+        # build:
+        #     context: .
+        restart: always
+        environment:
+            - MYSQL_DSN=mysql:host=mysql;port=3306;dbname=mydb
+            - PYTHONPYCACHEPREFIX=/tmp
+        volumes:
+            - .:/var/www
+            - .docker/mysql/my.cnf://etc/mysql/my.cnf
+        command: sleep infinity
+            # tail -f /dev/null
+            # while true; do sleep 1; done
+        networks: [db]
