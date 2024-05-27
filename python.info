@@ -1,0 +1,8 @@
+# doc STRING 
+# @https://developers.google.com/edu/python/strings
+
+# doc REAL-PYTHON
+# @https://realpython.com/run-python-scripts/
+
+# run command
+fake = json.loads(subprocess.check_output(['python3', '/var/www/libs/getfake.py']))

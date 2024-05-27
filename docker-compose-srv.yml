@@ -11,6 +11,7 @@ services:
         environment:
             - MYSQL_DSN=mysql:host=mysql;port=3306;dbname=mydb
             - PYTHONPYCACHEPREFIX=/tmp
+            - PYTHONPATH=/var/www
         volumes:
             - .:/var/www
             - .docker/mysql/my.cnf://etc/mysql/my.cnf

@@ -31,9 +31,11 @@ fixtures:
 
 f_mysql:
 # test: docker exec mysql8 mysql -u user mydb --execute 'SELECT * FROM tree'
-	docker exec mysql8 sh -c "mysql -u user mydb --execute 'TRUNCATE TABLE tree'"
+	docker exec mysql8 sh -c "mysql mydb --execute 'TRUNCATE TABLE tree'"
+	${MAKE} f_mysql_gen
+	docker exec mysql8 sh -c "mysql mydb < /var/www/fixtures/mysql/mydb_data.sql"
+f_mysql_gen:
 	docker exec dbplay python3 /var/www/fixtures/mysql/mydb_data.py
-	docker exec mysql8 sh -c "mysql -u user mydb < /var/www/fixtures/mysql/mydb_data.sql"
 
 ###########
 # INSTALL #
