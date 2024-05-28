@@ -1,4 +1,4 @@
-import json, random
+import json, random, re
 from faker import Faker
 
 # @doc FAKER
@@ -21,3 +21,10 @@ def generate() -> str:
 
 def generate_arr():
     return json.loads(generate())
+
+def generate_replace(text: str) -> str:
+    params = re.findall(r":[a-z]+", text)
+    for param in params:
+        fake = generate_arr()
+        text = text.replace(param, str(fake[param.replace(':', '')]), 1)
+    return text

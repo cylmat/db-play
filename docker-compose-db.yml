@@ -10,9 +10,9 @@ services:
     ##########
     # MySql #
     ##########
-    mysql8:
+    mysql:
         image: mysql:8
-        container_name: mysql8
+        container_name: mysql
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: root
