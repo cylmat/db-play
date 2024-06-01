@@ -26,16 +26,24 @@ _ok:
 # FIXTURES #
 ############
 
-fixtures:
-	@${MAKE} --no-print-directory f_mysql
+f_minio: #rb(rem bucket) / mb (make bucket)
+	docker exec minio_mc sh -c "mc rb --force --dangerous myminio/alpha"
+	docker exec minio_mc sh -c "mc mb myminio/alpha"
+	docker exec minio_mc sh -c "mc rm --recursive --force myminio/alpha"
+	docker exec minio_mc sh -c "mc cp /var/www/fixtures/minio/data_sample.txt myminio/alpha"
+f_minio_gen:
+	docker exec dbplay python3 /var/www/fixtures/generate/minio_data_sample.py
 
-f_mysql:
 # test: docker exec mysql8 mysql -u user mydb --execute 'SELECT * FROM tree'
+f_mysql:
 	docker exec mysql8 sh -c "mysql mydb --execute 'TRUNCATE TABLE tree'"
-	${MAKE} f_mysql_gen
 	docker exec mysql8 sh -c "mysql mydb < /var/www/fixtures/mysql/mydb_data.sql"
 f_mysql_gen:
-	docker exec dbplay python3 /var/www/fixtures/mysql/mydb_data.py
+	docker exec dbplay python3 /var/www/fixtures/generate/mysql_mydb_data.py
+
+gen:
+	${MAKE} f_minio_gen
+	${MAKE} f_mysql_gen
 
 ###########
 # INSTALL #

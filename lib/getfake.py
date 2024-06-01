@@ -15,6 +15,7 @@ def generate() -> str:
         "address": faker.address(),
         "text": faker.text(),
         "word": faker.word(),
+        "sentence": faker.sentence(),
         "int": random.randint(100, 900)
     } 
     return json.dumps(obj)
@@ -23,7 +24,7 @@ def generate_arr():
     return json.loads(generate())
 
 def generate_replace(text: str) -> str:
-    params = re.findall(r":[a-z]+", text)
+    params = re.findall(r":[a-z0-9]+", text)
     for param in params:
         fake = generate_arr()
         text = text.replace(param, str(fake[param.replace(':', '')]), 1)
