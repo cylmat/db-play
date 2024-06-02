@@ -19,6 +19,7 @@ services:
             - .:/var/www
         ports: [6379:6379]
         networks: [db]
+        command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
 
     redisadmin:
         image: erikdubbelboer/phpredisadmin

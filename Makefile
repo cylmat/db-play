@@ -45,7 +45,7 @@ f_minio: #rb(rem bucket) / mb (make bucket)
 	docker exec minio_mc sh -c "mc rb --force --dangerous myminio/alpha"
 	docker exec minio_mc sh -c "mc mb myminio/alpha"
 	docker exec minio_mc sh -c "mc rm --recursive --force myminio/alpha"
-	docker exec minio_mc sh -c "mc cp /var/www/fixtures/minio/data_sample.txt myminio/alpha"
+	docker exec minio_mc sh -c "mc cp /var/www/fixtures/minio/data_sample myminio/alpha"
 
 ### MYSQL ###
 
@@ -53,8 +53,15 @@ f_mysql:
 	docker exec mysql8 sh -c "mysql mydb --execute 'TRUNCATE TABLE tree'"
 	docker exec mysql8 sh -c "mysql mydb < /var/www/fixtures/mysql/mydb_data.sql"
 
+### REDIS ###
+
+f_redis:
+	docker exec redis sh -c "redis-cli FLUSHALL"
+	docker exec redis sh -c "redis-cli < /var/www/fixtures/redis/data"
+
 #################
 #   COMMANDS    #
+# & docs        #
 #################
 
 # https://min.io/docs/minio/linux/reference/minio-mc.html
@@ -64,6 +71,10 @@ minio_get:
 # https://dev.mysql.com/doc/refman/8.4/en
 mysql_get:
 	docker exec mysql8 sh -c "mysql mydb -e 'SELECT * FROM tree'"
+
+# https://redis.io/docs
+redis_get:
+	docker exec redis sh -c "redis-cli KEYS \*"
 
 #################
 #    INSTALL    #
