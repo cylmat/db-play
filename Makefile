@@ -17,11 +17,19 @@ restart:
 
 _ok:
 	@echo ""
-	@echo "MySql[3306] - Redis[6379]"
+	@echo "Mongo[27017] - MySql[3306] - Redis[6379]"
 	@echo "Adminer    on http://localhost:8081?server=mysql&username=user&password=pass&db=mydb"
 	@echo "Min.io     on http://localhost:9000"
+	@echo  Mongo      on http://localhost:8085"
 	@echo "Phpmyadmin on http://localhost:8082"
 	@echo "Redis      on http://localhost:8083"
+
+doc:
+	@echo "Documentation"
+	@echo "Min.io : https://min.io/docs"
+	@echo "MongoDb : https://mongodb.com/docs"
+	@echo "MySql : https://mysql.com/doc"
+	@echo "Redis : https://redis.io/docs"
 
 #####################
 #     FIXTURES      #
@@ -46,6 +54,13 @@ f_minio: #rb(rem bucket) / mb (make bucket)
 	docker exec minio_mc sh -c "mc mb myminio/alpha"
 	docker exec minio_mc sh -c "mc rm --recursive --force myminio/alpha"
 	docker exec minio_mc sh -c "mc cp /var/www/fixtures/minio/data_sample myminio/alpha"
+
+### MONGO ###
+
+f_mongo:
+#	mongosh -u user -p pass myBase --authenticationDatabase admin -f /var/www/fixtures/mongo/data.mongodb
+#	mongosh mongodb://user:pass@localhost:27017/myBase file.js
+	docker exec mongo sh -c "mongosh -u user -p pass myBase --authenticationDatabase admin -f /var/www/fixtures/mongo/data.mongodb"
 
 ### MYSQL ###
 

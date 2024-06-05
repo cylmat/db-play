@@ -1,5 +1,6 @@
 include:
   - docker-compose-db.yml
+  - docker-compose-doc.yml
   - docker-compose-kv.yml
   - docker-compose-obj.yml
   - docker-compose-srv.yml
